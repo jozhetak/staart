@@ -6,12 +6,14 @@
   "author": "Anand Chowdhary <mail@anandchowdhary.com>",
   "license": "MIT",
   "scripts": {
-    "build": "touch .env && mkdir -p dist && cp .env dist/.env && tsc",
+    "build": "touch .env && mkdir -p dist-builder && cp .env dist-builder/.env && tsc",
     "start": "concurrently 'yarn watch-build' 'yarn watch-prettier' 'yarn watch-server'",
-    "prettier-all": "prettier '{src,examples}/**/*.{ts,json}' --write",
-    "watch-build": "onchange '{src,examples}/**/*.ts' -- yarn build",
-    "watch-prettier": "onchange '{src,examples}/**/*.{ts,json}' -- prettier --write {{changed}}",
+    "start-builder": "concurrently 'yarn watch-build' 'yarn watch-prettier' 'yarn watch-builder'",
+    "prettier-all": "prettier '{src,builder,examples}/**/*.{ts,json}' --write",
+    "watch-build": "onchange '{src,builder,examples}/**/*.ts' -- yarn build",
+    "watch-prettier": "onchange '{src,builder,examples}/**/*.{ts,json}' -- prettier --write {{changed}}",
     "watch-server": "cd dist && nodemon index.js",
+    "watch-builder": "nodemon dist-builder/routes.js",
     "generate-docs": "typedoc --out docs ./src"
   },
   "devDependencies": {
@@ -26,6 +28,7 @@
     "@types/mustache": "^0.8.32",
     "@types/mysql": "^2.15.6",
     "@types/node": "^11.13.8",
+    "@types/recursive-readdir": "^2.2.0",
     "concurrently": "^4.1.0",
     "coveralls": "^3.0.3",
     "dotenv": "^7.0.0",
@@ -33,6 +36,7 @@
     "nodemon": "^1.19.0",
     "onchange": "^5.2.0",
     "prettier": "^1.17.0",
+    "recursive-readdir": "^2.2.2",
     "ts-jest": "^24.0.2",
     "typedoc": "^0.14.2",
     "typescript": "^3.4.5"

@@ -135,3 +135,4 @@ typings/
 # Built files
 dist/
 docs/
+dist-builder/

@@ -6,14 +6,17 @@
   "author": "Anand Chowdhary <mail@anandchowdhary.com>",
   "license": "MIT",
   "scripts": {
-    "build": "touch .env && mkdir -p dist-builder && cp .env dist-builder/.env && tsc",
-    "start": "concurrently 'yarn watch-build' 'yarn watch-prettier' 'yarn watch-server'",
+    "build": "yarn build-compile && yarn build-routes",
+    "build-compile": "touch .env && mkdir -p dist && cp .env dist/.env && tsc",
+    "build-routes": "node dist/builder/routes.js",
+    "start": "concurrently 'yarn watch-build' 'yarn watch-prettier' 'yarn watch-server' 'yarn watch-routes'",
     "start-builder": "concurrently 'yarn watch-build' 'yarn watch-prettier' 'yarn watch-builder'",
-    "prettier-all": "prettier '{src,builder,examples}/**/*.{ts,json}' --write",
-    "watch-build": "onchange '{src,builder,examples}/**/*.ts' -- yarn build",
+    "watch-build": "onchange '{src,builder,examples}/**/*.ts' -- yarn build-compile",
+    "watch-routes": "onchange 'src/router/**/*.ts' -- yarn build-routes",
     "watch-prettier": "onchange '{src,builder,examples}/**/*.{ts,json}' -- prettier --write {{changed}}",
-    "watch-server": "cd dist && nodemon index.js",
-    "watch-builder": "nodemon dist-builder/routes.js",
+    "watch-server": "cd dist/src && nodemon index.js",
+    "watch-builder": "nodemon dist/routes.js",
+    "prettier-all": "prettier '{src,builder,examples}/**/*.{ts,json}' --write",
     "generate-docs": "typedoc --out docs ./src"
   },
   "devDependencies": {

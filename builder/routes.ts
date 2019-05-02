@@ -42,10 +42,10 @@ const createRoutes = async () => {
       .join(", ")} } from "./router${route.replace(/\/:/g, "/_")}";\n`;
     methods.forEach(
       method =>
-        (routesCode += `app.${method}("${route}", ${mapMethodToImportName(
-          method,
-          route
-        )});\n`)
+        (routesCode += `app.${method}("${route.replace(
+          /index/g,
+          ""
+        )}", ${mapMethodToImportName(method, route)});\n`)
     );
   }
   let app = (await readFile(join(".", "src", "app.ts"))).toString();

@@ -136,3 +136,4 @@ typings/
 dist/
 docs/
 dist-builder/
+src/index.ts
